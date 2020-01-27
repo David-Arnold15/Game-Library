@@ -24,9 +24,8 @@ def save_database():
 def quit():
     exit()
     print('running_quit')
-
+choice = input(MENU_MESSAGE)
 while True:
-    choice = input(MENU_MESSAGE)
     if choice == "1":
         add_game()
     elif choice == "2":
