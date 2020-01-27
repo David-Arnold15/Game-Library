@@ -11,28 +11,36 @@ What would you like to do:
 5) Save Database
 6) Quit
 """
-INFO = ['Genre', 'Developer', 'Publisher', 'System','release date', 'number of players', 'price', 'completion status', 'purchase date', 'notes']
-library_database = {'Title':['Genre', 'Developer', 'Publisher', 'System','release date', 'single/multi?', 'price', 'completion status', 'purchase date', 'notes']}
+INFO = ['Title', 'Genre', 'Developer', 'Publisher', 'System','release date', 'number of players', 'price', 'completion status', 'purchase date', 'notes']
+library_database = {1:['Title', 'Genre', 'Developer', 'Publisher', 'System','release date', 'single/multi?', 'price', 'completion status', 'purchase date', 'notes']}
+
 def add_game():
     user_info = []
-    title = input('what is the Title of the game to add?: \n')
     for i in range(len(INFO)):
         print('what is the ', INFO[i], ' of the game to add?: ')
         user_info += input()
     library_database[title] =user_info 
     print("running add_game()")
+    
 def print_all_games():
-
+    #TODO: if the data is not
+    game_keys = list(library_database.keys())
+    for game_key in game_keys:
+        for j in range(len(INFO)):
+            print(INFO[j] , ': ', library_database[game_key][j])
+            
     print("running print_all_games()")
 def search_by_title():
+    
     print("running search_by_title()")
 def remove_a_game():
     print("running remove_a_game()")
 def save_database():
+    
     print("running save_database()")
 def quit():
-    exit()
     print('running_quit')
+    exit()
 while True:
     choice = input(MENU_MESSAGE)
     if choice == "1":

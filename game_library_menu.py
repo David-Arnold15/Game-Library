@@ -13,17 +13,22 @@ What would you like to do:
 """
 def add_game():
     print("running add_game()")
+
 def print_all_games():
     print("running print_all_games()")
+
 def search_by_title():
     print("running search_by_title()")
+
 def remove_a_game():
     print("running remove_a_game()")
+
 def save_database():
     print("running save_database()")
+
 def quit():
-    exit()
     print('running_quit')
+    exit()
 
 while True:
     choice = input(MENU_MESSAGE)
