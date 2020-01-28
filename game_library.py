@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 #Daisy Arnold
 #1/27/2019
+import pickle
+#Data initializaton
+datafile = open("game_lib.pickle" , "rb")
+library_database = pickle.load(datafile)
+datafile.close()   
+
+#constants
 MENU_MESSAGE= """
 What would you like to do:
 
@@ -11,19 +18,17 @@ What would you like to do:
 5) Save Database
 6) Quit
 """
-INFO = ['Title', 'Genre', 'Developer', 'Publisher', 'System','release date', 'number of players', 'price', 'completion status', 'purchase date', 'notes']
-library_database = {1:['Title', 'Genre', 'Developer', 'Publisher', 'System','release date', 'single/multi?', 'price', 'completion status', 'purchase date', 'notes']}
-
+INFO = ['Genre', 'Title',  'Developer', 'Publisher', 'System', 'Rating' , 'release date', 'single/multi?', 'price', 'completion status', 'purchase date', 'notes']
 def add_game():
     user_info = []
     for i in range(len(INFO)):
         print('what is the ', INFO[i], ' of the game to add?: ')
         user_info += input()
-    library_database[title] =user_info 
+    library_database[key] = user_info 
     print("running add_game()")
     
 def print_all_games():
-    #TODO: if the data is not
+    #TODO: if the data is not in the library, ask to enter the data
     game_keys = list(library_database.keys())
     for game_key in game_keys:
         for j in range(len(INFO)):
@@ -36,8 +41,9 @@ def search_by_title():
 def remove_a_game():
     print("running remove_a_game()")
 def save_database():
-    
-    print("running save_database()")
+    datafile = open("game_lib.pickle", "wb")
+    pickle.dump(library_database, datafile)
+    datafile.close()
 def quit():
     print('running_quit')
     exit()
