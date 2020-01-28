@@ -5,8 +5,10 @@ import pickle
 #Data initializaton
 datafile = open("game_lib.pickle" , "rb")
 library_database = pickle.load(datafile)
-datafile.close()   
-
+datafile.close()
+maxkey = 1
+for key in library_database.keys():
+    maxkey += 1
 #constants
 MENU_MESSAGE= """
 What would you like to do:
@@ -20,11 +22,13 @@ What would you like to do:
 """
 INFO = ['Genre', 'Title',  'Developer', 'Publisher', 'System', 'Rating' , 'release date', 'single/multi?', 'price', 'completion status', 'purchase date', 'notes']
 def add_game():
+    global maxkey
     user_info = []
     for i in range(len(INFO)):
         print('what is the ', INFO[i], ' of the game to add?: ')
         user_info += input()
-    library_database[key] = user_info 
+    maxkey+= 1 
+    library_database[str(maxkey)] = user_info 
     print("running add_game()")
     
 def print_all_games():
