@@ -40,6 +40,18 @@ def print_all_games():
             
     print("running print_all_games()")
 def search_by_title():
+    number_found = 0
+    title = input("  What is the title of the game ")
+    for game_key in library_database.keys():
+        if title == library_database[game_key][1]:
+            number_found+=1
+            for j in range(len(INFO)):
+                print(INFO[j] , ': ', library_database[game_key][j])            
+            print("----------------------") 
+    if number_found == 0:
+        print("*** NO MATCHES FOUND!***\n")
+    else:
+        print('we found ', number_found, ' matches') 
     
     print("running search_by_title()")
 def remove_a_game():
@@ -49,7 +61,12 @@ def save_database():
     pickle.dump(library_database, datafile)
     datafile.close()
 def quit():
-    print('running_quit')
+    choice = input('would you like to save?\n(Y/N): ')
+    if choice.lower() == 'y':
+        datafile = open("game_lib.pickle", "wb")
+        pickle.dump(library_database, datafile)
+        datafile.close()        
+    
     exit()
 while True:
     choice = input(MENU_MESSAGE)
