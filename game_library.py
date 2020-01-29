@@ -6,9 +6,7 @@ import pickle
 datafile = open("game_lib.pickle" , "rb")
 library_database = pickle.load(datafile)
 datafile.close()
-maxkey = 1
-for key in library_database.keys():
-    maxkey += 1
+maxkey = max(list(library_database.keys()))
 #constants
 MENU_MESSAGE= """
 What would you like to do:
@@ -21,59 +19,75 @@ What would you like to do:
 6) Quit
 """
 INFO = ['Genre', 'Title',  'Developer', 'Publisher', 'System', 'Rating' , 'release date', 'single/multi?', 'price', 'completion status', 'purchase date', 'notes']
-def add_game():
+def add_edit_game():
     global maxkey
-    user_info = []
-    for i in range(len(INFO)):
-        print('what is the ', INFO[i], ' of the game to add?: ')
-        user_info += input()
-    maxkey+= 1 
-    library_database[str(maxkey)] = user_info 
-    print("running add_game()")
     
+    user_input = input("Would you like to add(1) or edit(2)?: ")
+    user_info = []
+    if user_input == "1":
+        for i in range(len(INFO)):
+            print('what is the ', INFO[i], ' of the game to add?: ')
+            user_info += input()
+        maxkey+= 1 
+        library_database[str(maxkey)] = user_info 
+        #print("running add_game()")
+    elif user_input == "2":
+        key = search_by_info(is_return=True)
+        for i in range(len(INFO)):
+            print('what is the new', INFO[i], ' of the game?: ')
+            user_info += input()
+            library_database[str(key)] = user_info
+            
 def print_all_games():
     #TODO: if the data is not in the library, ask to enter the data
     game_keys = list(library_database.keys())
     for game_key in game_keys:
         for j in range(len(INFO)):
             print(INFO[j] , ': ', library_database[game_key][j])
-            
+    print("---------------------------------------")       
     print("running print_all_games()")
 
-def search_by_info():
-    category = None
-    while category == None:
-        number_found = 0
-        print("What info would you like to search for? ")
-       
-        for i in range(len(INFO)):
-            if i == len(INFO)-2:
-                print(INFO[i],", or, " , end=" ")
-            elif i == len(INFO)-1:
-                print(INFO[i])
-            else:
-                print(INFO[i], end=", ")
+def search_by_info(is_return=False):
+    if is_return == False: 
+        category = None
+        while category == None:
+            number_found = 0
+            print("What info would you like to search for? ")
+           
+            for i in range(len(INFO)):
+                if i == len(INFO)-2:
+                    print(INFO[i],", or, " , end=" ")
+                elif i == len(INFO)-1:
+                    print(INFO[i])
+                else:
+                    print(INFO[i], end=", ")
+                    
+                    
+            user_category = input("") 
+            for i in range(len(INFO)):
+                if user_category == INFO[i]:
+                    category= i 
+            if category == None:
+                print("invalid category, try again: ")
                 
-                
-        user_category = input("") 
-        for i in range(len(INFO)):
-            if user_category == INFO[i]:
-                category= i 
-        if category == None:
-            print("invalid category, try again: ")
-            
+    else:
+        category = 1
     print("what is the ", INFO[category], " of the game to search: ")
     user_data = input()
-    
-    for game_key in library_database.keys():
-        
-        if user_data in library_database[game_key][category]:
-            number_found+=1
+    if is_return==False:
+        for game_key in library_database.keys():
             
-            for j in range(len(INFO)):
-                print(INFO[j] , ': ', library_database[game_key][j])            
-            print("----------------------") 
-    
+            if user_data in library_database[game_key][category]:
+                number_found+=1
+                
+                for j in range(len(INFO)):
+                    print(INFO[j] , ': ', library_database[game_key][j])            
+                print("----------------------") 
+    else:
+        for game_key in library_database.keys():
+            if user_data == library_database[game_key][category]:
+                return game_key
+                 
     if number_found == 0:
         print("*** NO MATCHES FOUND!***\n")
     else:
@@ -81,6 +95,8 @@ def search_by_info():
     
     print("running search_by_title()")
 def remove_a_game():
+    key = search_by_info(is_return=True)
+    library_database.pop[key]
     print("running remove_a_game()")
 def save_database():
     datafile = open("game_lib.pickle", "wb")
@@ -97,7 +113,7 @@ def quit():
 while True:
     choice = input(MENU_MESSAGE)
     if choice == "1":
-        add_game()
+        add_edit_game()
     elif choice == "2":
         print_all_games()
     elif choice == "3":
